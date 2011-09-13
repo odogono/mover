@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+// # This file is part of the Spludo Framework.
+// # Copyright (c) 2009-2010 DracoBlue, http://dracoblue.net/
+// # 
+// # Licensed under the terms of MIT License. For the full copyright and license
+// # information, please see the LICENSE file in the root folder.
+
+child_process = require('child_process');
+fs = require("fs");
+util = require("util");
+
+var port = 3000;
+
+if( process.argv.length >= 2 )
+    port = process.argv[2];
+    
+dev_server = {
+    process: null,
+    files: [],
+    restarting: false,
+    
+    restart: function() {
+        this.restarting = true;
+        util.debug('DEVSERVER: Stopping server for restart');
+        return this.process.kill();
+    },
+
+    start: function() {
+        var self;
+        self = this;
+        util.debug('DEVSERVER: Starting server');
+        self.watchFiles();
+        this.process = child_process.spawn("node", ['app/app.js', port, '-e', 'dev']);
+        this.process.stdout.addListener('data', function(data) {
+            return process.stdout.write(data);
+        });
+        this.process.stderr.addListener('data', function(data) {
+            return util.print(data);
+        });
+        return this.process.addListener('exit', function(code) {
+            util.debug('DEVSERVER: Child process exited: ' + code);
+            this.process = null;
+            if (self.restarting) {
+                self.restarting = true;
+                self.unwatchFiles();
+                return self.start();
+            }
+        });
+    },
+
+    watchFiles: function() {
+        var self;
+        self = this;
+        // return child_process.exec('find . | grep "\.js$\|\.json$"', function(error, stdout, stderr) {
+        return child_process.exec('find . | grep "\.js$" | grep -v vendor', function(error, stdout, stderr) {
+            var files;
+            files = stdout.trim().split("\n");
+            util.log(util.inspect(error));
+            return files.forEach(function(file) {
+                // util.debug(file);
+                self.files.push(file);
+                return fs.watchFile(file, {
+                    interval: 500
+                }, 
+                function(curr, prev) {
+                    if (curr.mtime.valueOf() !== prev.mtime.valueOf() || curr.ctime.valueOf() !== prev.ctime.valueOf()) {
+                        util.debug('DEVSERVER: Restarting because of changed file at ' + file);
+                        return dev_server.restart();
+                    }
+                });
+            });
+        });
+    },
+    unwatchFiles: function() {
+        this.files.forEach(function(file){
+            fs.unwatchFile(file);
+        })
+        return (this.files = []);
+    }
+};
+dev_server.start();
+
