@@ -26,6 +26,8 @@ exports._ = _ = exports.underscore = require('underscore');
 global.Backbone = exports.Backbone = require('backbone');
 require( 'mustache.js' );
 
+
+
 var app = express.createServer();
 
 app.path = paths;
@@ -62,7 +64,7 @@ app.locals({
         var includes = [
             'lib/RequestAnimationFrame',
             'lib/json2.min',
-            'lib/jquery-1.6.2.min',
+            'lib/jquery-1.6.4.min',
             'lib/underscore',
             'lib/backbone',
             'lib/mustache',

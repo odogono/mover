@@ -11,5 +11,10 @@
         <div id="content">
             {{&body}}
         </div>
+        {{#templates}}
+        <script id="tmpl_{{id}}" type="text/x-mustache">
+            {{{value}}}
+        </script>
+        {{/templates}}
     </body>
 </html>
