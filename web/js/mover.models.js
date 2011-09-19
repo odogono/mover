@@ -1,42 +1,6 @@
 
 mover.model.Entity = Backbone.Model.extend({
 
-    initialize: function(){
-    },
-
-    update: function(t){
-    },
-
-    // setTarget: function( tx, ty ){
-    //     var pos = this.get('pos');
-    //     this.set({tar:[tx,ty], ang:this.getDegrees(pos[0], pos[1], tx, ty) });
-    // },
-
-    // getDegrees : function ( ax,ay, bx,by )
-    // {
-    //     var x = ax - bx;
-    //     var y = by - ay;
-    //     var angle = 0;
-
-    //     if( (x==0) && (y>=0) )
-    //         angle = Math.PI*2;
-    //     else if((x == 0) && (y <=0))
-    //         angle = (Math.PI);
-    //     else if((x < 0) && (y <= 0))
-    //         angle = (Math.PI+(Math.PI/2)) - Math.atan(y/x);
-    //     else if((x < 0) && (y >= 0))
-    //         angle = (3*Math.PI/2) + Math.abs(Math.atan(y/x));
-    //     else if(y > 0)
-    //         angle = (2*Math.PI+(Math.PI/2)) - Math.atan(y/x);
-    //     else 
-    //         angle = -1 * Math.atan(y/x) + (Math.PI/2);
-
-    //     angle = (angle * (180/Math.PI))-180;
-    //     if( angle < 0 ) 
-    //         angle = angle + 360;
-    //     return angle;
-    // },
-
     getAngle: function( pos, tar ){
         pos = pos || this.get('pos');
         tar = tar || this.get('tar');
@@ -61,11 +25,8 @@ mover.model.Entity = Backbone.Model.extend({
             angle = (2*Math.PI+(Math.PI/2)) - Math.atan(y/x);
         else 
             angle = -1 * Math.atan(y/x) + (Math.PI/2);
-
-        // angle = angle- Math.PI;
         if( angle < 0 ) 
             angle = angle + (2*Math.PI);
-        // console.log('angle result ' + angle );
         return angle;
     },
 
@@ -73,7 +34,6 @@ mover.model.Entity = Backbone.Model.extend({
 
         if( attrs.pos !== undefined || attrs.tar != undefined ){
             attrs.ang = this.getAngle( attrs.pos, attrs.tar );
-            // console.log('set entity ' + JSON.stringify(attrs) );
         }
         return Backbone.Model.prototype.set.call(this, attrs, options);    
     },
@@ -98,7 +58,6 @@ mover.model.Entity = Backbone.Model.extend({
             dims = this.get('dims'),
             left = pos[0] - (dims[0]/2), right = pos[0] + (dims[0]/2),
             top = pos[1] - (dims[1]/2), bottom = pos[1] + (dims[1]/2);
-// console.log('doesPointIntersect ' + JSON.stringify(arguments) );
         return (p[0] > left) && (p[0] < right) && (p[1] > top) && (p[1] < bottom);
     },
 
@@ -112,7 +71,7 @@ mover.model.Entity = Backbone.Model.extend({
                 tar[0], ',', tar[1],
                 ' = ', ang
             ];
-        return resullt.join('');
+        return result.join('');
     }
 });
 
