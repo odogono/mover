@@ -1,0 +1,16 @@
+{
+    "socket_server":{
+        "enabled":true
+    },
+    "session":{
+        "id":"mover.sid",
+        "path":"var/session"
+    },
+    "socketio":{
+        "transports":["websocket","flashsocket"],
+        "log level":3,
+        "flash policy port":843,
+        "flash policy server":false,
+        "force new connection":false
+    }
+}

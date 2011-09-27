@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    util = require('util'),
+    log = util.log,
+    path = require('path'),
+    root = path.join( path.dirname(__filename), '../' ),
+    expresso = path.join( root, 'node_modules', 'expresso', 'bin', 'expresso' );
+
+
+// console.log( process.argv );
+process.argv.push( '--serial');
+require(expresso);
