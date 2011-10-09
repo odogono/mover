@@ -1,12 +1,17 @@
 <div class="panel">
     <div class="message">Loading Mover</div>
 </div>
-<p class="debug">position: 0,0</p>
-<p id="arrow_debug">position: 0,0</p>
 
-<pre id="dump">
-</pre>
-<img id="img_arrow" src="img/arrow.png" style="" />
+<div class="debug">
+    <p class="debug_pos">position: 0,0</p>
+    <p id="arrow_debug">position: 0,0</p>
+    
+    <ul id="log">
+    </ul>
+    <textarea id="dump" readonly="readonly"></textarea>
+    <img id="img_arrow" src="img/arrow.png" style="" />
+</div>
+
 
 {{#javascripts}}
 <script src="{{.}}.js"></script>

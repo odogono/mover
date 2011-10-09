@@ -68,12 +68,12 @@ pre {
 }
 
 input[type="radio"] {vertical-align: text-bottom;}
-input[type="checkbox"] {vertical-align: bottom; *vertical-align: baseline;}
+input[type="checkbox"] {vertical-align: bottom; vertical-align: baseline;}
 .ie6 input {vertical-align: text-bottom;}
 
 select, input, textarea {font: 99% sans-serif;}
 
-table {font-size: inherit; font: 100%;}
+table {font-size: inherit; font-size: 100%;}
  
 /* Accessible focus treatment
 	people.opera.com/patrickl/experiments/keyboard/test */
@@ -175,16 +175,29 @@ mark {background-color: #fcd700; color: #000; font-style: italic; font-weight: b
 	
 }
 
+
+
+body{
+/*    background-image:url('../img/sea.png');
+    background-position: 30px;*/
+}
+
+.debug{
+    width:30%;
+}
+
 .panel{
-    min-width: 30em;
-    width: 50%;
-    min-height: 20em;
-    margin-top: 0em;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #CCC;
-    border-radius: 10px;
-    padding: 1em;
+    width: 640px;
+    height: 480px;
+    top: 50%; left: 50%;
+    margin: -240px 0 0 -320px;
+    position: absolute;
+}
+
+.panel svg{
+    border: 1px solid #999;
+/*    width:640px;
+    height:640px;*/
 }
 
 .message{
@@ -193,3 +206,13 @@ mark {background-color: #fcd700; color: #000; font-style: italic; font-weight: b
     font-size: 200%;
 }
 
+#log {
+    max-height: 20em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#dump { 
+    width: 40em;
+    height:40em;
+}
